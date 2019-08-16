@@ -1,0 +1,22 @@
+version: '3'
+services:
+  transmission:
+    image: jxw3ng/alpine-transmission
+    container_name: transmission
+    build:
+        context: .
+        dockerfile: Dockerfile
+    restart: always
+    network_mode: bridge
+    hostname: transmission
+    environment:
+      - PUID=1000
+      - PGID=985
+    volumes:
+
+      - $PWD/settings.json:/root/.config/transmission-daemon/settings.json
+      - $HOME/Downloads/transmission:/downloads
+
+    ports:
+        - "9091:9091"
+        - "51413:51413"

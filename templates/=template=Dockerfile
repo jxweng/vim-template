@@ -1,0 +1,13 @@
+FROM jxw3ng/alpine-base:latest
+LABEL MAINTAINER="jx weng <jx.w@me.com>" \
+    Description="Simple and lightweight Samba docker container, based on Alpine Linux." \
+    Version="1.0.1"
+
+ADD https://github.com/just-containers/s6-overlay/releases/download/v1.21.8.0/s6-overlay-amd64.tar.gz /tmp/
+RUN tar xzf /tmp/s6-overlay-amd64.tar.gz -C /
+RUN apt-get update && \
+    apt-get install -y nginx && \
+    echo "daemon off;" >> /etc/nginx/nginx.conf
+
+ENTRYPOINT ["/init"]
+CMD ["nginx"]
